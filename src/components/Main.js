@@ -8,8 +8,7 @@ class Main extends Component {
         this.state = {
             searchBar: "",
             results: "",
-            allPopularMovies: null,
-            "detail": null
+            allPopularMovies: null
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -18,10 +17,11 @@ class Main extends Component {
 
     componentDidMount() {
         debugger;
-        // fetch("https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=1")
-        fetch("https://reqres.in/api/users?page=1")
+        fetch("https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=1")
+        // fetch("https://reqres.in/api/users?page=1")
             .then(response => response.json())
             .then(data => {
+                debugger
                 this.setState({
                     allPopularMovies: data
                 })
@@ -29,7 +29,8 @@ class Main extends Component {
     }
 
     searchData(pageNumber) {
-        fetch("https://reqres.in/api/users?page=" + this.state.results)
+        fetch("https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=" + this.state.results)
+        // fetch("https://reqres.in/api/users?page=" + this.state.results)
             .then(response => response.json())
             .then(data => {
                 this.setState({
@@ -38,17 +39,18 @@ class Main extends Component {
             })
     }
 
-    getDetail(data) {
-        debugger;
-        fetch("https://reqres.in/api/users/" + data)
-            .then(response => response.json())
-            .then(data => {
-                debugger
-                this.setState({
-                    detail: <div>{data.data.avatar}</div>
-                })
-            })
-    }
+    // getDetail(data) {
+    //     debugger;
+    //     // fetch("https://api.themoviedb.org/3/movie/{movie_id}?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US")
+    //     fetch("https://reqres.in/api/users/" + data)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             debugger
+    //             this.setState({
+    //                 detail: <div>{data.data.avatar}</div>
+    //             })
+    //         })
+    // }
 
     handleChange(event) {
         const { name, value } = event.target
@@ -60,22 +62,24 @@ class Main extends Component {
     //     this.setState({ results: "Jessica" })
     // }
 
-    navigationDetail(id) {
+    navigationDetail(data) {
         debugger;
-        fetch("https://reqres.in/api/users/" + id)
-            .then(response => response.json())
-            .then(data => {
-                debugger
-                this.props.history.push("/detail/" + id, { response: data.data });
-                // this.setState({
-                //     detail: <div>{data.data.avatar}</div>
-                // })
-            })
+        // fetch("https://api.themoviedb.org/3/movie/" + id + "?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US")
+        // // fetch("https://reqres.in/api/users/" + id)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         debugger
+        //         this.props.history.push("/detail/" + id, { response: data.data });
+        //         // this.setState({
+        //         //     detail: <div>{data.data.avatar}</div>
+        //         // })
+        //     })
+        this.props.history.push("/detail/" + data.id, { response: data });
 
     }
 
     render() {
-        const allMovies = this.state.allPopularMovies == null ? "loading..." : this.state.allPopularMovies.data;
+        const allMovies = this.state.allPopularMovies == null ? "loading..." : this.state.allPopularMovies.results;
         console.log("detail" + this.state.detail);
         if (allMovies === "loading...") {
             return (
@@ -93,8 +97,8 @@ class Main extends Component {
             let data = [];
             for (let i = 0; i < movieTitles.length; i++) {
                 //data.push(<h2><span onClick={() => this.getDetail(movieTitles[i].id)}>{movieTitles[i].first_name}</span></h2>)
-                data.push(<li><h2><span onClick={() => this.navigationDetail(movieTitles[i].id)}>{movieTitles[i].first_name}</span></h2></li>)
-
+                /*data.push(<li><h2><span onClick={() => this.navigationDetail(movieTitles[i].id)}>{movieTitles[i].first_name}</span></h2></li>)*/
+                data.push(<li><h2><span onClick={() => this.navigationDetail(movieTitles[i])}>{movieTitles[i].title}</span></h2></li>)
             }
 
             return (
