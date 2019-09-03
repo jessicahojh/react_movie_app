@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import MovieCard from "./MovieCards";
+import Pagination from './Pagination';
 
 
 class Main extends Component {
@@ -8,7 +9,9 @@ class Main extends Component {
         this.state = {
             searchBar: "",
             results: "",
-            allPopularMovies: null
+            allPopularMovies: null,
+            currentPage: 1, 
+            totalPages: 500
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -17,7 +20,7 @@ class Main extends Component {
 
     componentDidMount() {
         debugger;
-        fetch("https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=1")
+        fetch("https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=" + this.state.currentPage)
         // fetch("https://reqres.in/api/users?page=1")
             .then(response => response.json())
             .then(data => {
@@ -29,7 +32,7 @@ class Main extends Component {
     }
 
     searchData(pageNumber) {
-        fetch("https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=" + this.state.results)
+        fetch("https://api.themoviedb.org/3/search/movie?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&query=" + this.state.results)
         // fetch("https://reqres.in/api/users?page=" + this.state.results)
             .then(response => response.json())
             .then(data => {
@@ -39,41 +42,15 @@ class Main extends Component {
             })
     }
 
-    // getDetail(data) {
-    //     debugger;
-    //     // fetch("https://api.themoviedb.org/3/movie/{movie_id}?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US")
-    //     fetch("https://reqres.in/api/users/" + data)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             debugger
-    //             this.setState({
-    //                 detail: <div>{data.data.avatar}</div>
-    //             })
-    //         })
-    // }
 
     handleChange(event) {
         const { name, value } = event.target
         this.setState({ [name]: value });
     }
 
-    // handleSubmit(event) {
-    //     event.preventDefault()
-    //     this.setState({ results: "Jessica" })
-    // }
 
     navigationDetail(data) {
         debugger;
-        // fetch("https://api.themoviedb.org/3/movie/" + id + "?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US")
-        // // fetch("https://reqres.in/api/users/" + id)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         debugger
-        //         this.props.history.push("/detail/" + id, { response: data.data });
-        //         // this.setState({
-        //         //     detail: <div>{data.data.avatar}</div>
-        //         // })
-        //     })
         this.props.history.push("/detail/" + data.id, { response: data });
 
     }
@@ -81,6 +58,9 @@ class Main extends Component {
     render() {
         const allMovies = this.state.allPopularMovies == null ? "loading..." : this.state.allPopularMovies.results;
         console.log("detail" + this.state.detail);
+
+        const totalMovies = 10000;
+
         if (allMovies === "loading...") {
             return (
                 <div>
@@ -96,8 +76,6 @@ class Main extends Component {
             console.log(movieTitles);
             let data = [];
             for (let i = 0; i < movieTitles.length; i++) {
-                //data.push(<h2><span onClick={() => this.getDetail(movieTitles[i].id)}>{movieTitles[i].first_name}</span></h2>)
-                /*data.push(<li><h2><span onClick={() => this.navigationDetail(movieTitles[i].id)}>{movieTitles[i].first_name}</span></h2></li>)*/
                 data.push(<li><h2><span onClick={() => this.navigationDetail(movieTitles[i])}>{movieTitles[i].title}</span></h2></li>)
             }
 
@@ -121,6 +99,20 @@ class Main extends Component {
                             {this.state.detail}
                         </div>
                     </div>
+
+                    <div>
+                        { this.state.currentPage && (
+                        <span className="current-page d-inline-block h-100 pl-4 text-secondary">
+                        Page <span className="font-weight-bold">{ this.state.currentPage }</span> / <span className="font-weight-bold">{ this.state.totalPages }</span>
+                        </span>
+                        ) }
+
+                    </div>
+
+                    <div className="d-flex flex-row py-4 align-items-center">
+                        <Pagination totalRecords={totalMovies} pageLimit={18} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+                    </div>
+
                 </div>
             );
         }
