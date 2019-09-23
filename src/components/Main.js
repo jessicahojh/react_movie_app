@@ -15,13 +15,11 @@ class Main extends Component {
         }
 
         this.handleChange = this.handleChange.bind(this)
-        //   this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentDidMount() {
         debugger;
         fetch("https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=" + this.state.currentPage)
-        // fetch("https://reqres.in/api/users?page=1")
             .then(response => response.json())
             .then(data => {
                 debugger
@@ -31,9 +29,8 @@ class Main extends Component {
             })
     }
 
-    searchData(pageNumber) {
+    searchData(searchKeyWords) {
         fetch("https://api.themoviedb.org/3/search/movie?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&query=" + this.state.results)
-        // fetch("https://reqres.in/api/users?page=" + this.state.results)
             .then(response => response.json())
             .then(data => {
                 this.setState({
@@ -50,7 +47,6 @@ class Main extends Component {
 
 
     navigationDetail(data) {
-        debugger;
         this.props.history.push("/detail/" + data.id, { response: data });
 
     }
@@ -81,7 +77,6 @@ class Main extends Component {
 
             return (
                 <div className="movie-card" >
-                    {/*   <form className="search-form" onSubmit={this.handleSubmit}>*/}
                     <input
                         type="text"
                         name="results"
@@ -90,7 +85,6 @@ class Main extends Component {
                         onChange={this.handleChange}
                     />
                     <button onClick={this.searchData.bind(this)}>Search!</button>
-                    {/* </form>*/}
 
                     <div className="all-popular-movies">
                         <h2>List of all popular movies go here</h2>
@@ -110,7 +104,10 @@ class Main extends Component {
                     </div>
 
                     <div className="d-flex flex-row py-4 align-items-center">
-                        <Pagination totalRecords={totalMovies} pageLimit={18} pageNeighbours={1} onPageChanged={this.onPageChanged} />
+                        <Pagination totalRecords={totalMovies} 
+                                    pageLimit={20} 
+                                    pageNeighbours={1} 
+                                    onPageChanged={this.onPageChanged} />
                     </div>
 
                 </div>

@@ -7,19 +7,6 @@ export class MovieCard extends React.Component {
         this.props.history.push("/home");
     }
 
-    getDetail() {
-        debugger;
-
-        fetch("https://reqres.in/api/users/" + this.props.id)
-            .then(response => response.json())
-            .then(data => {
-                debugger
-                this.setState({
-                    detail: <div>{data.data.avatar}</div>
-                })
-            })
-    }
-
     render() {
         var data = this.props.location.state.response;
         return (
