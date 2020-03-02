@@ -1,7 +1,4 @@
 import React, { Component } from "react"
-import MovieCard from "./MovieCards";
-import Pagination from './Pagination';
-
 
 class Main extends Component {
     constructor() {
@@ -9,20 +6,16 @@ class Main extends Component {
         this.state = {
             searchBar: "",
             results: "",
-            allPopularMovies: null,
-            currentPage: 1, 
-            totalPages: 500
+            allPopularMovies: null
         }
 
         this.handleChange = this.handleChange.bind(this)
     }
 
     componentDidMount() {
-        debugger;
         fetch("https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=" + this.state.currentPage)
             .then(response => response.json())
             .then(data => {
-                debugger
                 this.setState({
                     allPopularMovies: data
                 })
@@ -103,12 +96,6 @@ class Main extends Component {
 
                     </div>
 
-                    <div className="d-flex flex-row py-4 align-items-center">
-                        <Pagination totalRecords={totalMovies} 
-                                    pageLimit={20} 
-                                    pageNeighbours={1} 
-                                    onPageChanged={this.onPageChanged} />
-                    </div>
 
                 </div>
             );
