@@ -14,7 +14,7 @@ const AllMovies = ({movieData}) => {
         return (
             <div>
                 {movies.map(movie =>
-                    <div>{movie.title}</div>
+                    <div key={movie.title}>{movie.title}</div>
                 )}
             </div>
         )

@@ -1,35 +1,33 @@
-// searchData(searchKeyWords) {
-    //     fetch("https://api.themoviedb.org/3/search/movie?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&query=" + this.state.results)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             this.setState({
-    //                 allPopularMovies: data
-    //             })
-    //         })
-    // }
+import React, { useState, useEffect } from "react";
+import Button from 'react-bootstrap/Button';
 
-    // const handleSearchInput = e => {
-    //   let searchInput = e.target.value;
-    // };
-    
-    // const handleSubmit = e => {
-    //     e.preventDefault();
-    //     setSearchBar(searchInput);
-  
-    //     setData({"allocation_amount": allocation,
-    //             "investor_amounts": investors})
-        
-    //     setSearch("");
-    //   } 
+const SearchBar = ({setSearch}) => {
 
+    const handleSubmit = e => {
+      setSearch = e.target.value;
+    };
 
-                    {/* <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        name="searchInput"
-                        placeholder="Search Movie Here"
-                        value={searchInput}
-                        onChange={handleSearchInput}
-                    />
-                    <Button type="submit">Search!</Button>
-                </form> */}
+  return (
+    <form onSubmit={handleSubmit}>
+      
+        <div className="form-group">
+          <label htmlFor="search">Name: </label>
+          <input
+            type="text"
+            className="form-control"
+            id="search"
+            name="search"
+            placeholder="Search Movie Name"
+            value={setSearch}
+            onChange={handleSubmit}
+          />
+        </div>
+      
+      <Button type="submit" className="btn">
+        Search Movie
+      </Button>
+    </form>
+  );
+};
+
+export default SearchBar;
