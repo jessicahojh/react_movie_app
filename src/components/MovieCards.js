@@ -1,23 +1,19 @@
-import React from "react";
-import '../index.css';
+// import React from "react";
 
-export class MovieCard extends React.Component {
+// const MovieCard = ({data, searchInput}) {
 
-    navigationHome() {
-        this.props.history.push("/home");
-    }
+//     navigationHome() {
 
-    render() {
-        var data = this.props.location.state.response;
-        return (
-            <div className="movie-card" >
-                <h2>Title: {data.title}</h2>
-                <h2>Release Date: {data.release_date}</h2>
-                <h2>Overview: {data.overview}</h2>
-                <button onClick={this.navigationHome.bind(this)} > Go Back</button>
-            </div>
-        )
-    }
-}
+//     render() {
+//         var data = this.props.location.state.response;
+//         return (
+//             <div className="movie-card" >
+//                 <h2>Title: {data.title}</h2>
+//                 <h2>Release Date: {data.release_date}</h2>
+//                 <h2>Overview: {data.overview}</h2>
+//             </div>
+//         )
+//     }
+// }
 
-export default MovieCard
+// export default MovieCard
