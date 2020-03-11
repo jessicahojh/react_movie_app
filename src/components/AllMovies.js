@@ -1,8 +1,8 @@
 import React from "react"
 
-const AllMovies = ({movieData}) => {
+const AllMovies = ({allMovieData, grabMovieObj, movie}) => {
 
-    if (movieData === null) {
+    if (allMovieData === null) {
         return (
             <div>
                 <h2> Loading...</h2>
@@ -10,11 +10,11 @@ const AllMovies = ({movieData}) => {
         )
 
     } else {
-        const movies = movieData.results
+        const movies = allMovieData.results
         return (
             <div>
                 {movies.map(movie =>
-                    <div key={movie.title}>{movie.title}</div>
+                    <div onClick={grabMovieObj}>{movie.title}</div>
                 )}
             </div>
         )

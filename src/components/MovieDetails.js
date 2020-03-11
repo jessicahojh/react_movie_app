@@ -1,28 +1,26 @@
-// import React from "react";
+import React from "react";
 
-// const MovieDetails = ({movieData}) => {
+const MovieDetails = ({currentMovieObj}) => {
 
-//     if (movieData === null) {
-//         return (
-//             <div>
-//                 <h2> Loading...</h2>
-//             </div>
-//         )
+    if (currentMovieObj === {}) {
+        return (
+            <div>
+                <h2> Click On A Movie To See Details</h2>
+            </div>
+        )
 
-//     } else {
+    } else {
 
-//         const movies = movieData.results
+        return (
+            <div className="movie-card" >
+                <h2>Title: {currentMovieObj.title}</h2>
+                <h2>Release Date: {currentMovieObj.release_date}</h2>
+                <h2>Overview: {currentMovieObj.overview}</h2>
+            </div>
+        )
+    }
 
-//         return (
-//             <div className="movie-card" >
-//                 <h2>Title: {movies.title}</h2>
-//                 <h2>Release Date: {movies.release_date}</h2>
-//                 <h2>Overview: {movies.overview}</h2>
-//             </div>
-//         )
-//     }
-
-// }
+}
 
 
-// export default MovieDetails
+export default MovieDetails
