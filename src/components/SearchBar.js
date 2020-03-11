@@ -11,7 +11,6 @@ const SearchBar = ({setSearch}) => {
     <form onSubmit={handleSubmit}>
       
         <div className="form-group">
-          <label htmlFor="search">Name: </label>
           <input
             type="text"
             className="form-control"
