@@ -38,8 +38,15 @@ function App() {
       setCurrentPage(currentPage - 1)
     }
 
-    function grabMovieObj(){
-      setCurrentMovieObj(movie)
+    function grabMovieObj(e){
+      e.preventDefault();
+      const movieName = e.target.innerText;
+
+      for (let obj of allMovieData.results) {
+        if (obj.title === movieName) {
+          setCurrentMovieObj(obj)
+        }
+      }
     }
 
     // useEffect(() => {fetch(`https://api.themoviedb.org/3/search/movie?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&query=${search}`)
@@ -59,7 +66,7 @@ function App() {
   
     return (
       <>
-      <Provider>
+      <Provider store={store}>
         <Container>
             <Row>
               <Col></Col>
@@ -85,8 +92,6 @@ function App() {
                 <AllMovies
                     allMovieData={allMovieData}
                     grabMovieObj={grabMovieObj}
-                    currentMovieObj={currentMovieObj}
-                    movie={movie}
                 />
 
                 <Pagination 

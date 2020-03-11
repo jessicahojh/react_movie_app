@@ -1,6 +1,6 @@
 import React from "react"
 
-const AllMovies = ({allMovieData, grabMovieObj, movie}) => {
+const AllMovies = ({allMovieData, grabMovieObj}) => {
 
     if (allMovieData === null) {
         return (
