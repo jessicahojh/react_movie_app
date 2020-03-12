@@ -21,14 +21,32 @@ function App() {
     const [allMovieData, setAllMovieData] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentMovieObj, setCurrentMovieObj] = useState({});
-    // const [search, setSearch] = useState()
+    const [search, setSearch] = useState("")
 
-    useEffect(() => {fetch(`https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=${currentPage}`)
+    useEffect(() => {
+      if (search === "") {
+      fetch(`https://api.themoviedb.org/3/movie/popular?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&page=${currentPage}`)
         .then(response => response.json())
         .then(data => {
             setAllMovieData(data)
         });
+      } else {
+      fetch(`https://api.themoviedb.org/3/search/movie?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&query=${search}`)
+        .then(response => response.json())
+        .then(data => {
+            setAllMovieData(data)
+        })
+      }
     })
+
+    const handleSearch = e => {
+      setSearch(e.target.value)
+    }
+
+    const handleSubmit = e => {
+      e.preventDefault()
+      setSearch(search)
+    }
 
     function gotoNextPage() {
       setCurrentPage(currentPage + 1)
@@ -47,22 +65,7 @@ function App() {
           setCurrentMovieObj(obj)
         }
       }
-    }
-
-    // useEffect(() => {fetch(`https://api.themoviedb.org/3/search/movie?api_key=bc6de8bc9311eee4a0310ff7b7cdf2f0&language=en-US&query=${search}`)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             setMovieData(data)
-    //         })
-    //     })
-
-  //   const onSubmit = e => {
-  //     e.preventDefault();
-  //     githubContext.searchUsers(text);
-  //     setSearch('');
-  //     }
-  // };
-    
+    }  
   
     return (
       <>
@@ -71,7 +74,7 @@ function App() {
             <Row>
               <Col></Col>
               <Col md="auto">
-                <h1>Popular Movies</h1>
+                <h1>Search for Popular Movies</h1>
               </Col>
               <Col></Col>
             </Row>
@@ -80,7 +83,9 @@ function App() {
 
             <Row>
                 <SearchBar
-                // setSearch={setSearch}
+                search={search}
+                handleSubmit={handleSubmit}
+                handleSearch={handleSearch}
                 />
             </Row>
 
@@ -88,7 +93,7 @@ function App() {
   
             <Row>
               <Col>
-              <h1>All Movies</h1>
+              <h1>All Popular Movies</h1>
                 <AllMovies
                     allMovieData={allMovieData}
                     grabMovieObj={grabMovieObj}

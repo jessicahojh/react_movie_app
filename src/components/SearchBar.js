@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Button from 'react-bootstrap/Button';
 
-const SearchBar = ({setSearch}) => {
-
-    const handleSubmit = e => {
-      setSearch = e.target.value;
-    };
+const SearchBar = ({search, handleSubmit, handleSearch}) => {
 
   return (
     <form onSubmit={handleSubmit}>
@@ -17,8 +13,8 @@ const SearchBar = ({setSearch}) => {
             id="search"
             name="search"
             placeholder="Search Movie Name"
-            value={setSearch}
-            onChange={handleSubmit}
+            value={search}
+            onChange={handleSearch}
           />
         </div>
       
